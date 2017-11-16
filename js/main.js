@@ -53,11 +53,11 @@ var vm = new Vue({
                 this.sendComment();
             } else {
                 var self = this;
+                self.showLoader = false;
                 self.submitClick = true;
                 submitButton.prop('disabled', true);
 
                 setTimeout(function () {
-                    self.showLoader = false;
                     self.submitClick = false;
                     submitButton.prop('disabled', false);
                 }, 1000);

@@ -134,7 +134,7 @@
             <button id="sendComment"
                     class="addition-comment__button"
                     type="submit"
-                    @click="checkReview"
+                    v-on:click="checkReview"
                     v-bind:class="{ error: submitClick }"
             >
                 <span class="addition-comment__text">Написать отзыв</span>
