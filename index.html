@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="main-wrapper">
+    <div class="user-info">
+        <div class="user">
+            <div class="user__photo-wrapper">
+                <img src="img/user-photo.png" alt="user photo" class="user__photo">
+            </div>
+
+            <div class="user__description">
+                <span class="user__name">Вероника Ростова</span>
+
+                <span class="user__position">Менеджер по продажам</span>
+
+                <p class="user__status">Подберу для вас самые лучшие предложения. Мои услуги абсолютно бесплатны</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="services-wrapper">
+        <div class="services">
+            <div class="services__header">
+                <div class="services__header-cell"></div>
+                <div class="services__header-cell">
+                    <span>Услуги</span>
+                </div>
+            </div>
+
+            <div class="services__row">
+                <div class="services__cell services__cell--first">
+                    <span>Ручное бронирование</span>
+                    <div class="services__graph"></div>
+                </div>
+                <div class="services__cell">
+                    <span>11</span>
+                </div>
+            </div>
+
+            <div class="services__row">
+                <div class="services__cell services__cell--second">
+                    <span>Пакетные туры</span>
+                    <div class="services__graph"></div>
+                </div>
+                <div class="services__cell">
+                    <span>3</span>
+                </div>
+            </div>
+
+            <div class="services__row">
+                <div class="services__cell services__cell--third">
+                    <span>Отели</span>
+                    <div class="services__graph"></div>
+                </div>
+                <div class="services__cell">
+                    <span>1</span>
+                </div>
+            </div>
+
+            <div class="services__total">
+                <div class="services__total-cell">
+                    <span>Всего</span>
+                </div>
+                <div class="services__total-cell">
+                    <span>15</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews">
+        <div class="reviews-header">
+            <div class="reviews-header__switchers">
+                <span class="reviews-header__switcher reviews-header__switcher--unactive">Последние отзывы</span>
+            </div>
+
+            <div class="reviews-header__info" v-cloak>
+
+                <div class="reviews-header__icon reviews-header__icon--likes"
+                     v-on:click.once="incrementLikes"
+                     v-bind:class="{ disable: !likeCanClick }"
+                >
+                    {{ counterLikes }}
+                </div>
+
+                <div class="reviews-header__icon reviews-header__icon--comments">
+                    {{ comments.length }}
+                </div>
+            </div>
+        </div>
+
+
+        <transition-group name="slide-fade" tag="div" class="review-item">
+            <review-item
+                    v-for="item in comments"
+                    v-bind:review="item"
+                    v-bind:key="item.name">
+            </review-item>
+        </transition-group>
+
+
+        <transition name="slide-fade">
+            <div class="overlay" v-show="showLoader"></div>
+        </transition>
+
+    </div>
+
+    <div class="addition-comment">
+        <form class="addition-comment__form">
+            <input id="name"
+                   class="addition-comment__input"
+                   type="text"
+                   name="name"
+                   placeholder="Имя"
+                   v-model="newName"
+            >
+
+            <textarea id="textarea"
+                      class="addition-comment__textarea"
+                      name="text"
+                      placeholder="Комментарий"
+                      v-model="newText"
+                      v-on:keydown="handleCmdEnter($event)"
+            ></textarea>
+
+            <button id="sendComment"
+                    class="addition-comment__button"
+                    type="submit"
+                    @click="checkReview"
+                    v-bind:class="{ error: submitClick }"
+            >
+                <span class="addition-comment__text">Написать отзыв</span>
+                <span class="addition-comment__error">Заполните все поля!</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
+
