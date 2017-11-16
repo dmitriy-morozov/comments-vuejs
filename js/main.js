@@ -31,11 +31,14 @@ var vm = new Vue({
     },
     methods: {
         fetchData: function () {
+            var self = this;
             axios.get("./php/getcomments.php").then(function (response) {
                 this.comments = response.data;
                 this.showLoader = false;
                 setTimeout(function () {
                     $('.addition-comment__form').trigger("reset");
+                    self.newName = '';
+                    self.newText = '';
                 }, 100);
             }.bind(this));
         },
