@@ -256,6 +256,32 @@ body {
   .addition-comment__error {
     display: none; }
 
+.reviews-pagination {
+  text-align: center;
+  margin: 20px; }
+  .reviews-pagination li, .reviews-pagination strong {
+    display: inline-block;
+    margin-right: 3px; }
+  .reviews-pagination strong {
+    color: #ffffff;
+    background-color: #bebebe; }
+  .reviews-pagination a {
+    color: black;
+    padding: 7px 12px;
+    text-decoration: none;
+    line-height: 1.5em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #f2fbff;
+    border: 1px solid #cfcfcf; }
+    .reviews-pagination a:hover, .reviews-pagination a:focus, .reviews-pagination a:active {
+      outline: none;
+      cursor: pointer; }
+  .reviews-pagination li.active a,
+  .reviews-pagination li:hover a {
+    background-color: #c1efff; }
+
 .overlay {
   position: fixed;
   top: 0;

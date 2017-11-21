@@ -385,23 +385,67 @@ body {
   }
 }
 
+.reviews-pagination {
+  text-align: center;
+  margin: 20px;
+
+  li, strong {
+    display: inline-block;
+    margin-right: 3px;
+  }
+
+  strong {
+    color: #ffffff;
+    background-color: #bebebe;
+  }
+
+  a {
+    color: black;
+    padding: 7px 12px;
+    text-decoration: none;
+    line-height: 1.5em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #f2fbff;
+    border: 1px solid #cfcfcf;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+      cursor: pointer;
+    }
+
+  }
+
+  li.active,
+  li:hover {
+    a {
+      background-color: #c1efff;
+    }
+  }
+}
+
 .overlay {
   position: fixed;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  background: rgba(255,255,255,0.7) url('../img/loader.gif') no-repeat 50% 50%;
-  z-index:2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7) url('../img/loader.gif') no-repeat 50% 50%;
+  z-index: 2;
 }
 
 .slide-fade-enter-active {
   transition: all 0.5s ease;
 }
+
 .slide-fade-leave-active {
   transition: all 0.5s ease;
 }
-.slide-fade-enter, .slide-fade-leave-to{
+
+.slide-fade-enter, .slide-fade-leave-to {
   opacity: 0;
   transition: all 0.5s ease;
 }

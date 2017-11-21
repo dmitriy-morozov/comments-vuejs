@@ -16,56 +16,77 @@ Vue.component('review-item', {
     }
 });
 
+
 var vm = new Vue({
     el: '.main-wrapper',
     data: function () {
         return {
             comments: [],
+            commentsListing: [],
             newName: '',
             newText: '',
+            pagination: false,
+            pageNumbers: 1,
+            itemsPerPage: 5,
+            firstPage: 1,
             likeCanClick: true,
-            submitClick: false,
+            submitError: false,
+            disableClick: false,
             showLoader: true,
             counterLikes: Math.floor(Math.random() * (20 - 1)) + 1
         }
     },
+    components: {
+        paginate: VuejsPaginate
+    },
     methods: {
-        fetchData: function () {
-            var self = this;
-            axios.get("./php/getcomments.php").then(function (response) {
-                this.comments = response.data;
-                this.showLoader = false;
-                setTimeout(function () {
-                    $('.addition-comment__form').trigger("reset");
-                    self.newName = '';
-                    self.newText = '';
-                }, 100);
-            }.bind(this));
-        },
         incrementLikes: function () {
             this.counterLikes += 1;
             this.likeCanClick = false;
         },
+
+        handleCmdEnter: function (e) {
+            var self = this;
+            if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
+                self.checkReview(e);
+            }
+        },
+
+        fetchData: function () {
+            var self = this;
+
+            axios.get("./php/getcomments.php").then(function (response) {
+                this.comments = response.data.reverse();
+
+                setTimeout(function () {
+                    self.newName = '';
+                    self.newText = '';
+                }, 100);
+
+                self.listPagination(self.firstPage);
+            }.bind(this));
+        },
+
         checkReview: function (e) {
             e.preventDefault();
-            var submitButton = $('.addition-comment__button');
+            var self = this;
             this.showLoader = true;
 
             if ((this.newName != '') && (this.newText != '')) {
-                submitButton.prop('disabled', false);
+                self.disableClick = true;
                 this.sendComment();
             } else {
-                var self = this;
                 self.showLoader = false;
-                self.submitClick = true;
-                submitButton.prop('disabled', true);
+                self.submitError = true;
+                self.disableClick = true;
 
                 setTimeout(function () {
-                    self.submitClick = false;
-                    submitButton.prop('disabled', false);
+                    self.submitError = false;
+                    self.disableClick = false;
                 }, 1000);
             }
         },
+
         sendComment: function () {
             var self = this;
             var day = new Date().getDate();
@@ -81,15 +102,28 @@ var vm = new Vue({
                 month: month,
                 year: year
             }).then(function () {
-                self.submitClick = false;
-                $('.addition-comment__button').prop('disabled', false);
+                self.submitError = false;
+                self.disableClick = false;
+                self.$refs.pagination.selected = 0;
                 self.fetchData();
             });
         },
-        handleCmdEnter: function (e) {
-            if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
-                $('#sendComment').trigger('click');
+
+        listPagination: function (pageNum) {
+            var self = this;
+            self.showLoader = true;
+            self.pageNumbers = Math.ceil(self.comments.length / self.itemsPerPage);
+
+            if (self.pageNumbers > 1) {
+                self.pagination = true;
             }
+
+            var index = (pageNum - 1) * self.itemsPerPage;
+            self.commentsListing = self.comments.slice(index, index + self.itemsPerPage);
+
+            setTimeout(function () {
+                self.showLoader = false;
+            }, 500);
         }
     },
     created() {
