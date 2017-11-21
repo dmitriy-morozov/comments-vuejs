@@ -14,11 +14,9 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 var_dump($_POST);
 $postName = $mysqli->real_escape_string($_POST["name"]);
 $postText = $mysqli->real_escape_string($_POST["text"]);
-$postDay = $mysqli->real_escape_string($_POST["day"]);
-$postMonth = $mysqli->real_escape_string($_POST["month"]);
-$postYear = $mysqli->real_escape_string($_POST["year"]);
+$postDate = $mysqli->real_escape_string($_POST["date"]);
 
 //add new comment to database
-$result = $mysqli->real_query("INSERT INTO reviews (name, text, day, month, year) VALUES ('$postName', '$postText', '$postDay', '$postMonth', '$postYear')");
+$result = $mysqli->real_query("INSERT INTO reviews (name, text, date) VALUES ('$postName', '$postText', '$postDate')");
 
 ?>

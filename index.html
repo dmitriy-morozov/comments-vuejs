@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Comments</title>
+    <title>Comments Vue.js</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -35,35 +35,11 @@
                 </div>
             </div>
 
-            <div class="services__row">
-                <div class="services__cell services__cell--first">
-                    <span>Ручное бронирование</span>
-                    <div class="services__graph"></div>
-                </div>
-                <div class="services__cell">
-                    <span>11</span>
-                </div>
-            </div>
-
-            <div class="services__row">
-                <div class="services__cell services__cell--second">
-                    <span>Пакетные туры</span>
-                    <div class="services__graph"></div>
-                </div>
-                <div class="services__cell">
-                    <span>3</span>
-                </div>
-            </div>
-
-            <div class="services__row">
-                <div class="services__cell services__cell--third">
-                    <span>Отели</span>
-                    <div class="services__graph"></div>
-                </div>
-                <div class="services__cell">
-                    <span>1</span>
-                </div>
-            </div>
+            <service-item
+                    v-for="item in servicesList"
+                    v-bind:service="item"
+                    v-bind:key="item.title">
+            </service-item>
 
             <div class="services__total">
                 <div class="services__total-cell">
@@ -98,7 +74,7 @@
         </div>
 
 
-        <transition-group name="slide-fade" tag="div" class="review-item">
+        <transition-group name="slide-down" tag="div" class="review-item">
             <review-item
                     v-for="item in commentsListing"
                     v-bind:review="item"
@@ -159,7 +135,7 @@
 
 
 <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+<script type="text/javascript" src="https://unpkg.com/vuejs-paginate@latest"></script>
 <script type="text/javascript" src="js/vue.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>

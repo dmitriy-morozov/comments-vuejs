@@ -1,19 +1,27 @@
 Vue.component('review-item', {
     props: ['review'],
-    template: '<div class="review">' +
-    '  <div class="review__author-date">' +
-    '    <span class="review__author-name"> {{ review.name }} </span>' +
-    '    <span class="review__date">{{ fullDate() }} </span>' +
-    '  </div>' +
-    '  <div class="review__text-wrapper">' +
-    '       <p class="review__text"> {{ review.text }}</p>' +
-    '  </div>' +
-    '</div>',
-    methods: {
-        fullDate: function () {
-            return this.review.day + ' ' + this.review.month + ' ' + this.review.year
-        }
-    }
+    template:   '<div class="review">' +
+                '  <div class="review__author-date">' +
+                '    <span class="review__author-name"> {{ review.name }} </span>' +
+                '    <span class="review__date">{{ review.date }} </span>' +
+                '  </div>' +
+                '  <div class="review__text-wrapper">' +
+                '       <p class="review__text"> {{ review.text }}</p>' +
+                '  </div>' +
+                '</div>'
+});
+
+Vue.component('service-item', {
+    props: ['service'],
+    template:   '<div class="services__row">' +
+                '   <div class="services__cell">' +
+                '       <span> {{ service.title }}</span>' +
+                '       <div class="services__graph"></div>' +
+                '   </div>' +
+                '   <div class="services__cell">' +
+                '       <span> {{ service.number }} </span>' +
+                '   </div>' +
+                '</div>'
 });
 
 
@@ -23,6 +31,12 @@ var vm = new Vue({
         return {
             comments: [],
             commentsListing: [],
+            servicesList:
+                [
+                    {title: "Ручное бронирование", number: 11},
+                    {title: "Пакетные туры", number: 3},
+                    {title: "Отели", number: 1}
+                ],
             newName: '',
             newText: '',
             pagination: false,
@@ -50,6 +64,21 @@ var vm = new Vue({
             if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
                 self.checkReview(e);
             }
+        },
+
+        fullDate: function () {
+            var date = new Date();
+
+            var options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timezone: 'UTC',
+                hour: 'numeric',
+                minute: 'numeric'
+            };
+
+            return date.toLocaleString("ru", options)
         },
 
         fetchData: function () {
@@ -89,18 +118,12 @@ var vm = new Vue({
 
         sendComment: function () {
             var self = this;
-            var day = new Date().getDate();
-            var monthNames = ["января", "февраля", "марта", "апреля", "мая", "июня",
-                "июля", "августа", "сентября", "октября", "ноября", "декабря"];
-            var month = monthNames[new Date().getMonth()];
-            var year = new Date().getFullYear();
+            var date = self.fullDate();
 
             axios.post('./php/postcomments.php', {
                 name: this.newName,
                 text: this.newText,
-                day: day,
-                month: month,
-                year: year
+                date: date
             }).then(function () {
                 self.submitError = false;
                 self.disableClick = false;
@@ -112,6 +135,7 @@ var vm = new Vue({
         listPagination: function (pageNum) {
             var self = this;
             self.showLoader = true;
+            self.commentsListing = '';
             self.pageNumbers = Math.ceil(self.comments.length / self.itemsPerPage);
 
             if (self.pageNumbers > 1) {

@@ -17,11 +17,14 @@ $result = $mysqli->query("SELECT * FROM reviews");
 for ($i = 0, $numrows = mysqli_num_rows($result); $i < $numrows; $i++) {
     $row = mysqli_fetch_assoc($result);
 
-    $reviews[$i] = array("name" => $row["name"], "text" => $row["text"], "day" => $row["day"], "month" => $row["month"], "year" => $row["year"]);
+    $reviews[$i] = array(
+        "name" => $row["name"],
+        "text" => $row["text"],
+        "date" => $row["date"]
+    );
 }
 
 //echo JSON to page
-$response =  json_encode($reviews);
+$response = json_encode($reviews);
 echo $response;
-
 ?>

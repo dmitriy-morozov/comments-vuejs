@@ -105,7 +105,13 @@ body {
     height: 100%;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: yellow; }
+    background-color: yellow;
+    animation-name: animate-graf;
+    animation-duration: 4000ms;
+    animation-iteration-count: 1;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear; }
     .services__graph::after {
       content: '';
       position: absolute;
@@ -113,20 +119,25 @@ body {
       left: 0;
       width: 1px;
       height: 100%; }
-  .services__cell--first .services__graph {
-    width: 100%;
+  .services__row:nth-child(2) .services__cell .services__graph {
+    max-width: 100%;
     background-color: #b1e19b; }
-    .services__cell--first .services__graph::after {
+    .services__row:nth-child(2) .services__cell .services__graph::after {
       background-color: #83b26d; }
-  .services__cell--second .services__graph, .services__cell--third .services__graph {
+  .services__row:nth-child(3) .services__cell .services__graph {
     background-color: #ace2f8; }
-    .services__cell--second .services__graph::after, .services__cell--third .services__graph::after {
+    .services__row:nth-child(3) .services__cell .services__graph::after {
       background-color: #7eb4ca; }
-  .services__cell--second .services__graph {
-    width: 27%; }
-  .services__cell--third .services__graph {
-    width: 9%; }
+  .services__row:nth-child(3) .services__cell .services__graph {
+    max-width: 27%; }
+  .services__row:nth-child(4) .services__cell .services__graph {
+    max-width: 9%; }
 
+@keyframes animate-graf {
+  from {
+    width: 0; }
+  to {
+    width: 100%; } }
 .reviews {
   position: relative; }
 
@@ -281,6 +292,10 @@ body {
   .reviews-pagination li.active a,
   .reviews-pagination li:hover a {
     background-color: #c1efff; }
+  .reviews-pagination li.disabled a,
+  .reviews-pagination li.disabled a:hover {
+    background-color: #f2fbff;
+    cursor: default; }
 
 .overlay {
   position: fixed;
@@ -291,15 +306,30 @@ body {
   background: rgba(255, 255, 255, 0.7) url("../img/loader.gif") no-repeat 50% 50%;
   z-index: 2; }
 
+.slide-down-enter-active,
 .slide-fade-enter-active {
-  transition: all 0.5s ease; }
+  transition: all 1s ease; }
+
+.slide-down-leave {
+  display: none; }
+
+.slide-down-leave-to {
+  display: none; }
+
+.slide-down-enter {
+  transform: translateY(-300%);
+  opacity: 0; }
+
+.slide-down-enter-to {
+  transform: translateY(0%);
+  opacity: 1; }
 
 .slide-fade-leave-active {
-  transition: all 0.5s ease; }
+  transition: all 1s ease; }
 
 .slide-fade-enter, .slide-fade-leave-to {
   opacity: 0;
-  transition: all 0.5s ease; }
+  transition: all 1s ease; }
 
 [v-cloak] {
   display: none; }

@@ -144,6 +144,12 @@ body {
       bottom-right-radius: 5px;
     }
     background-color: yellow;
+    animation-name: animate-graf;
+    animation-duration: 4000ms;
+    animation-iteration-count: 1;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
 
     &::after {
       content: '';
@@ -155,10 +161,10 @@ body {
     }
   }
 
-  &__cell--first {
+  &__row:nth-child(2) &__cell {
 
     .services__graph {
-      width: 100%;
+      max-width: 100%;
       background-color: #b1e19b;
 
       &::after {
@@ -167,8 +173,7 @@ body {
     }
   }
 
-  &__cell--second,
-  &__cell--third {
+  &__row:nth-child(3) &__cell {
 
     .services__graph {
       background-color: #ace2f8;
@@ -179,16 +184,25 @@ body {
     }
   }
 
-  &__cell--second {
+  &__row:nth-child(3) &__cell {
     .services__graph {
-      width: 27%;
+      max-width: 27%;
     }
   }
 
-  &__cell--third {
+  &__row:nth-child(4) &__cell {
     .services__graph {
-      width: 9%;
+      max-width: 9%;
     }
+  }
+}
+
+@keyframes animate-graf {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
   }
 }
 
@@ -425,6 +439,14 @@ body {
       background-color: #c1efff;
     }
   }
+
+  li.disabled {
+    a,
+    a:hover {
+      background-color: #f2fbff;
+      cursor: default;
+    }
+  }
 }
 
 .overlay {
@@ -437,17 +459,36 @@ body {
   z-index: 2;
 }
 
+.slide-down-enter-active,
 .slide-fade-enter-active {
-  transition: all 0.5s ease;
+  transition: all 1s ease;
+}
+
+.slide-down-leave {
+  display: none;
+}
+
+.slide-down-leave-to {
+  display: none;
+}
+
+.slide-down-enter {
+  transform: translateY(-300%);
+  opacity: 0;
+}
+
+.slide-down-enter-to {
+  transform: translateY(0%);
+  opacity: 1;
 }
 
 .slide-fade-leave-active {
-  transition: all 0.5s ease;
+  transition: all 1s ease;
 }
 
 .slide-fade-enter, .slide-fade-leave-to {
   opacity: 0;
-  transition: all 0.5s ease;
+  transition: all 1s ease;
 }
 
 [v-cloak] {
